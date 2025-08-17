@@ -40,7 +40,14 @@ public class SecurityConfig {
             .cors().configurationSource(corsConfigurationSource()) 
             .and()
             .authorizeHttpRequests()
-                .requestMatchers("/api/hr/auth/register", "/api/hr/auth/login", "/h2-console/**").permitAll()
+                .requestMatchers("/api/hr/auth/register", "/api/hr/auth/login", "/h2-console/**",
+                "/swagger-ui/**",
+                "/swagger-ui.html",
+                "/v3/api-docs/**",
+                "/v3/api-docs",
+                "/swagger-resources/**",
+                "/webjars/**"
+                    ).permitAll()
                 .anyRequest().authenticated()
             .and()
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
@@ -52,7 +59,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200")); 
+        configuration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:8080")); 
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setExposedHeaders(List.of("Authorization")); 

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hr_system.services.EmployeeExportService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,12 +23,14 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/employees")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "Employees Export", description = "Endpoints for exporting employees data")
 public class EmployeeDownloadDataController {
 
     private final @Qualifier("excelExportService") EmployeeExportService employeeExportService;
 
 
     // Export all employees data to Excel file
+    @Operation(summary = "Export employees to Excel", description = "Export all employees data to an Excel file")
     @GetMapping("/export/excel")
     public ResponseEntity<InputStreamResource> exportEmployeesToExcel() {
         log.info("Received request to export employees data to Excel");

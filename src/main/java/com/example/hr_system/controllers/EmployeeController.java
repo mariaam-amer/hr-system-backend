@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.hr_system.models.dto.EmployeeDto;
 import com.example.hr_system.services.EmployeeService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/employees")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "Employee Management", description = "APIs for managing employees")
 public class EmployeeController {
     // This class will handle HTTP requests related to Employee operations
     // It will use EmployeeService to perform CRUD operations on Employee entities
@@ -35,6 +38,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     // Create a new employee
+    @Operation(summary = "Create new employee", description = "Add a new employee to the system")
     @PostMapping
     public ResponseEntity<EmployeeDto> addEmployee(@RequestBody EmployeeDto dto) {
         log.info("Received request to add employee: {}", dto);
@@ -43,6 +47,7 @@ public class EmployeeController {
     }
 
     // Update an existing employee
+    @Operation(summary = "Update employee", description = "Update existing employee by ID")
     @PutMapping("/{id}")
     public ResponseEntity<EmployeeDto> updateEmployee(
         @PathVariable Long id,
@@ -54,6 +59,7 @@ public class EmployeeController {
     }
 
     // Delete an employee by ID
+    @Operation(summary = "Delete employee", description = "Delete employee by ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
 
@@ -64,6 +70,7 @@ public class EmployeeController {
 
     // Get all employees with pagination
     //http://localhost:8080/api/employees?page=0&size=5&sort=id,desc
+    @Operation(summary = "List employees", description = "Get all employees with pagination")
     @GetMapping
     public ResponseEntity<Page<EmployeeDto>> getAllEmployees(Pageable pageable) {
 
@@ -73,6 +80,7 @@ public class EmployeeController {
     }
 
     // Get employee by ID
+    @Operation(summary = "Get employee", description = "Get employee by ID")
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable Long id) {
 
@@ -83,6 +91,7 @@ public class EmployeeController {
 
     // Search employees by name with pagination
     //http://localhost:8080/api/employees/search?name=a&page=0&size=5&sort=id,desc
+    @Operation(summary = "Search employees", description = "Search employees by full name")
     @GetMapping("/search")
     public ResponseEntity<Page<EmployeeDto>> searchEmployeesByName(
             @RequestParam String name,
